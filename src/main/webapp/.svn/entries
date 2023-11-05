@@ -1,0 +1,43 @@
+10
+
+dir
+174
+https://svn.iutmetz.univ-lorraine.fr:10093/trunk/Projet/src/main/webapp
+https://svn.iutmetz.univ-lorraine.fr:10093
+
+
+
+2016-06-10T13:35:26.332435Z
+166
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+8d80b8d0-7d78-446d-a008-061d3100781a
+
+JSP
+dir
+
+META-INF
+dir
+
+WEB-INF
+dir
+
+js
+dir
+
+style
+dir
+

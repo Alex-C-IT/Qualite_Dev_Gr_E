@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+	<!-- ************************************************ -->
+	<!-- * Fichier de configuration du Framework STRUTS * -->
+	<!-- ************************************************ -->
+
+	<!-- Permet d'activer le mode de developpement. Celui-ci donne des informations 
+		supplémentaires. -->
+	<constant name="struts.devMode" value="true" />
+
+	<package name="com.iut.banque" namespace="/" extends="struts-default">
+
+		<!-- Action générique ou dynamique -->
+		<!-- 1er paramètre indique le chemin du package -->
+		<!-- 2ème paramètre indique la class elle-même -->
+		<!-- 3ème paramètre indique la méthode à lancer -->
+		<!-- Un succès redirige vers une page comportant le nom de la class -->
+		<!-- Un echec redirige vers une page comportant le nom de la class prefixée 
+			par '-error' -->
+		<!-- Toutes les combinaisons sont donc possibles -->
+
+		<action name="*.*.*" class="com.iut.banque.{1}.{2}" method="{3}">
+			<result name="SUCCESS">/JSP/{2}.jsp</result>
+			<result name="SUCCESSMANAGER">/JSP/{2}-Manager.jsp</result>
+			<result name="ERROR">/JSP/{2}-error.jsp</result>
+			<result name="LISTCLIENTS">/JSP/ListClients.jsp</result>
+			<result>/JSP/{2}.jsp</result>
+			<!-- <result name="LOGIN">Login.jsp</result> -->
+			<result name="MULTI">Multiple.jsp</result>
+			<result name="FAILED">Failed.jsp</result>
+		</action>
+
+		<!-- Permet un retour 'static' vers la page principal pour les clients -->
+		<action name="retourTableauDeBordClient" class="com.iut.banque.controller.Connect">
+			<result>/JSP/Connect.jsp</result>
+		</action>
+
+		<!-- Permet un retour 'static' vers la page principal pour le manager -->
+		<action name="retourTableauDeBordManager" class="com.iut.banque.controller.Connect">
+			<result>/JSP/Connect-Manager.jsp</result>
+		</action>
+
+
+		<action name="logout" class="com.iut.banque.controller.Connect"
+			method="logout">
+			<result name="SUCCESS">/JSP/Index.jsp</result>
+		</action>
+
+		<action name="retourAccueil">
+			<result>/JSP/Index.jsp</result>
+		</action>
+
+		<action name="redirectionLogin">
+			<result>/JSP/Login.jsp</result>
+		</action>
+
+		<!-- Appel de la page compte avec un paramètre donné -->
+
+		<action name="urlDetail" class="com.iut.banque.controller.DetailCompte">
+			<result name="success">/JSP/DetailCompte.jsp</result>
+		</action>
+
+		<action name="listeCompteManager" class="com.iut.banque.controller.ListeCompteManager">
+			<result>/JSP/ListeCompteManager.jsp</result>
+		</action>
+
+		<!-- Suppression de compte et d'utilisateur -->
+
+		<action name="deleteAccount" class="com.iut.banque.controller.ListeCompteManager"
+			method="deleteAccount">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">urlResultatSuppression</param>
+				<param name="compteInfo">%{compteInfo}</param>
+				<param name="client">%{client.userId}</param>
+				<!-- Account est un boolean qui indique si la suppression est sur un 
+					compte ou un utilisateur -->
+				<param name="account">true</param>
+			</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">urlResultatSuppression</param>
+				<param name="compte">%{compte}</param>
+				<param name="client">%{client.userId}</param>
+				<param name="errorMessage">TECHNICAL</param>
+				<!-- Account est un boolean qui indique si la suppression est sur un 
+					compte ou un utilisateur -->
+				<param name="account">true</param>
+			</result>
+			<result name="NONEMPTYACCOUNT" type="redirectAction">
+				<param name="actionName">urlResultatSuppression</param>
+				<param name="compte">%{compte}</param>
+				<param name="client">%{client.userId}</param>
+				<param name="errorMessage">NONEMPTYACCOUNT</param>
+				<!-- Account est un boolean qui indique si la suppression est sur un 
+					compte ou un utilisateur -->
+				<param name="account">true</param>
+			</result>
+		</action>
+
+		<action name="deleteUser" class="com.iut.banque.controller.ListeCompteManager"
+			method="deleteUser">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">urlResultatSuppression</param>
+				<param name="userInfo">%{userInfo}</param>
+				<!-- Account est un boolean qui indique si la suppression est sur un 
+					compte ou un utilisateur -->
+				<param name="account">false</param>
+			</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">urlResultatSuppression</param>
+				<param name="client">%{client.userId}</param>
+				<param name="errorMessage">TECHNICAL</param>
+				<!-- Account est un boolean qui indique si la suppression est sur un 
+					compte ou un utilisateur -->
+				<param name="account">false</param>
+			</result>
+			<result name="NONEMPTYACCOUNT" type="redirectAction">
+				<param name="actionName">urlResultatSuppression</param>
+				<param name="client">%{client.userId}</param>
+				<param name="errorMessage">NONEMPTYACCOUNT</param>
+				<!-- Account est un boolean qui indique si la suppression est sur un 
+					compte ou un utilisateur -->
+				<param name="account">false</param>
+			</result>
+		</action>
+
+		<action name="urlResultatSuppression" class="com.iut.banque.controller.ResultatSuppression">
+			<result>/JSP/ResultatSuppression.jsp</result>
+		</action>
+
+		<!-- Modification d'un compte par un manager -->
+
+		<action name="editAccount" class="com.iut.banque.controller.DetailCompteEdit">
+			<result name="SUCCESS">/JSP/DetailCompteEdit.jsp</result>
+			<result>/JSP/DetailCompteEdit.jsp</result>
+		</action>
+
+		<action name="changerDecouvertAutoriseAction" class="com.iut.banque.controller.DetailCompteEdit"
+			method="changementDecouvert">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+			</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">TECHNICAL</param>
+			</result>
+			<result name="NEGATIVEOVERDRAFT" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">NEGATIVEOVERDRAFT</param>
+			</result>
+			<result name="INCOMPATIBLEOVERDRAFT" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">INCOMPATIBLEOVERDRAFT</param>
+			</result>
+		</action>
+
+		
+		<!-- Création de compte -->
+		<action name="addAccount" class="com.iut.banque.controller.CreerCompte"
+			method="creationCompte">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">urlAddAccount</param>
+				<param name="client">%{client.userId}</param>
+				<param name="error">false</param>
+				<param name="result">true</param>
+				<param name="compte">%{compte}</param>
+				<param name="message">SUCCESS</param>
+			</result>
+			<result name="NONUNIQUEID" type="redirectAction">
+				<param name="actionName">urlAddAccount</param>
+				<param name="client">%{client.userId}</param>
+				<param name="error">true</param>
+				<param name="result">true</param>
+				<param name="message">NONUNIQUEID</param>
+			</result>
+			<result name="INVALIDFORMAT" type="redirectAction">
+				<param name="actionName">urlAddAccount</param>
+				<param name="client">%{client.userId}</param>
+				<param name="error">true</param>
+				<param name="result">true</param>
+				<param name="message">INVALIDFORMAT</param>
+			</result>
+		</action>
+
+		<action name="urlAddAccount" class="com.iut.banque.controller.CreerCompte">
+			<result>/JSP/CreerCompte.jsp</result>
+		</action>
+
+		<!-- Opération sur les comptes -->
+
+		<action name="creditAction" class="com.iut.banque.controller.DetailCompte"
+			method="credit">
+			<result name="SUCCESS">/JSP/DetailCompte.jsp</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">urlDetail</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">TECHNICAL</param>
+			</result>
+			<result name="NEGATIVEAMOUNT" type="redirectAction">
+				<param name="actionName">urlDetail</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">NEGATIVEAMOUNT</param>
+			</result>
+		</action>
+
+
+		<action name="debitAction" class="com.iut.banque.controller.DetailCompte"
+			method="debit">
+			<result name="SUCCESS">/JSP/DetailCompte.jsp</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">urlDetail</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">TECHNICAL</param>
+			</result>
+			<result name="NOTENOUGHFUNDS" type="redirectAction">
+				<param name="actionName">urlDetail</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">BUSINESS</param>
+			</result>
+			<result name="NEGATIVEAMOUNT" type="redirectAction">
+				<param name="actionName">urlDetail</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">NEGATIVEAMOUNT</param>
+			</result>
+		</action>
+		
+		<action name="creditActionEdit" class="com.iut.banque.controller.DetailCompteEdit"
+			method="credit">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+			</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">TECHNICAL</param>
+			</result>
+			<result name="NEGATIVEAMOUNT" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">NEGATIVEAMOUNT</param>
+			</result>
+		</action>
+
+
+		<action name="debitActionEdit" class="com.iut.banque.controller.DetailCompteEdit"
+			method="debit">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+			</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">TECHNICAL</param>
+			</result>
+			<result name="NOTENOUGHFUNDS" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">BUSINESS</param>
+			</result>
+			<result name="NEGATIVEAMOUNT" type="redirectAction">
+				<param name="actionName">editAccount</param>
+				<param name="compte">%{compte}</param>
+				<param name="error">NEGATIVEAMOUNT</param>
+			</result>
+		</action>
+
+		<!-- Ajout d'un utilisateur -->
+		<action name="ajoutUtilisateur" class="com.iut.banque.controller.CreerUtilisateur"
+			method="creationUtilisateur">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">urlAjoutUtilisateur</param>
+				<param name="result">SUCCESS</param>
+				<param name="message">%{message}</param>
+			</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">urlAjoutUtilisateur</param>
+				<param name="result">ERROR</param>
+				<param name="message">%{message}</param>
+			</result>
+			<result type="redirectAction">
+				<param name="actionName">urlAjoutUtilisateur</param>
+				<param name="result">VANILLA</param>
+			</result>
+		</action>
+
+		<action name="urlAjoutUtilisateur" class="com.iut.banque.controller.CreerUtilisateur">
+			<result>/JSP/CreerUtilisateur.jsp</result>
+		</action>
+
+	</package>
+</struts>

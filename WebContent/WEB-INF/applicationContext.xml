@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- ************************************************************ -->
+	<!-- * Fichier de configuration utilisé par le framework SPRING * -->
+	<!-- ************************************************************ -->
+
+	<!-- Cf http://docs.spring.io/spring/docs/current/spring-framework-reference/html/orm.html 
+		pour de l'aide sur ce fichier -->
+
+	<!-- ============= DAO (Production) ============= -->
+
+	<!-- La DAO. Utilise la balise <property> qui signifie que l'injection est 
+		faite par un setter (et non par un argument du constructeur). -->
+	<bean id="daoHibernate" class="com.iut.banque.dao.DaoHibernate"
+		scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- La session factory. Utilise Hibernate. Il est possible d'utiliser <property 
+		name="annotatedClasses"> avec une liste de classes au lieu de <property name="packagesToScan" 
+		value="com.iut.banque.modele" /> -->
+	<bean id="sessionFactory" scope="singleton"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				<!-- <prop key="hibernate.default_schema">allard19u_coa_banque</prop> -->
+			</props>
+		</property>
+		<property name="packagesToScan" value="com.iut.banque.modele" />
+	</bean>
+
+	<!-- La source de donnée utilisée en production. Contient les infos de base 
+		de la connection -->
+	<bean id="dataSource" scope="singleton"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+
+		<property name="url" value="jdbc:mysql://localhost:3306/coa_banque?useSSL=false" />
+			<property name="username" value="root" />
+			<property name="password"  value="" />
+	</bean>
+
+	<!-- ============= Gestion des Transactions ============= -->
+
+	<!-- Le gestionnaire de transaction nécessaire pour l'annotation @Transactionnal -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Signifie que les annotations définissent la configuration des transactionsS -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- ============= Modele ============= -->
+
+	<!-- Injection des managers dans la facade par le constructor -->
+	<bean id="banqueFacade" class="com.iut.banque.facade.BanqueFacade">
+		<constructor-arg ref="loginManager" />
+		<constructor-arg ref="banqueManager" />
+	</bean>
+
+	<!-- Injection de la Dao dans le BankManager par le setter -->
+	<bean id="banqueManager" class="com.iut.banque.facade.BanqueManager">
+		<property name="dao" ref="daoHibernate" />
+	</bean>
+
+	<!-- Injection de la Dao dans le LoginManager par le setter -->
+	<bean id="loginManager" class="com.iut.banque.facade.LoginManager">
+		<property name="dao" ref="daoHibernate" />
+	</bean>
+
+	<!-- ============= Converter ============= -->
+
+	<!-- Injection de la Dao dans le ClientConverter par le constructeur -->
+	<bean id="clientConverter"
+		class="com.iut.banque.converter.ClientConverter" scope="singleton">
+		<constructor-arg ref="daoHibernate" />
+	</bean>
+
+	<!-- Injection de la Dao dans le AccountConverter par le constructeur -->
+	<bean id="accountConverter"
+		class="com.iut.banque.converter.AccountConverter" scope="singleton">
+		<constructor-arg ref="daoHibernate" />
+	</bean>
+</beans>
