@@ -46,9 +46,9 @@
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver" />
 
-		<property name="url" value="jdbc:mysql://localhost:3306/coa_banque?useSSL=false" />
+		<property name="url" value="jdbc:mysql://viaduct.proxy.rlwy.net:15979/coa_banque?useSSL=true" />
 			<property name="username" value="root" />
-			<property name="password"  value="" />
+			<property name="password"  value="E43f-CD336HfEagC1aEbd1-5H66heH-6" />
 	</bean>
 
 	<!-- ============= Gestion des Transactions ============= -->
