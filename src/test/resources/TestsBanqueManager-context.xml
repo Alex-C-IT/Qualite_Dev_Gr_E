@@ -37,8 +37,8 @@
 		base de la connection -->
 	<bean id="dataSource" scope="singleton"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://viaduct.proxy.rlwy.net:15979/coa_banque_essais?useSSL=true" />
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://viaduct.proxy.rlwy.net:15979/coa_banque_essais?useSSL=false" />
 		<property name="username" value="root" />
 		<property name="password"  value="E43f-CD336HfEagC1aEbd1-5H66heH-6" />
 		<!-- Nécessaire, sinon les test se font quand même -->
