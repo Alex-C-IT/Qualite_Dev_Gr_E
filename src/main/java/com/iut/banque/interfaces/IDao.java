@@ -149,19 +149,6 @@ public interface IDao {
 	public boolean isUserAllowed(String usrId, String usrPwd);
 
 	/**
-	 * Méthode pour vérifier la connection de l'utilisateur. Confronte le mot de
-	 * passe en paramètre à celui dans la base de données pour l'utilisateur
-	 * passé en paramètre
-	 *
-	 * @param userId
-	 *            : un String correspondant au userId à qui on veut vérifier le
-	 *            mot de passe
-	 * @return Boolean : le résultat de la requête. Vrai si les mots de passes
-	 *         correspondent, faux sinon
-	 */
-	public boolean isUserAllowedWithoutPassword(String usrId);
-
-	/**
 	 * Méthode pour récupérer un utilisateur basé sur son identifiant
 	 * 
 	 * @param id

@@ -10,6 +10,12 @@
 </head>
 
 <body>
+<!-- Vérifie si un paramètre 'result' est passé dans l'URL avec la valeur "SUCCESS" -->
+<s:if test="result == 'SUCCESS'">
+		<!-- Si oui, on affiche le message correspondant contenu dans le paramètre 'message' -->
+		<p><s:property value="message" /></p>
+</s:if>
+
 	<h1>Login :</h1>
 	<s:form name="myForm" action="controller.Connect.login.action"
 		method="POST">
@@ -19,7 +25,7 @@
 	</s:form>
 
 	<p> Mot de pass oublié ? </p>
-	<s:form name="myFormMotDePasseOublie" action="urlMotDePasseOublie" method="POST">
+	<s:form name="myFormMotDePasseOublie" action="urlMotDePasseOublie" method="GET">
 		<s:submit name="MotDePasseOublie" value="Mot de pass oublié" />
 	</s:form>
 

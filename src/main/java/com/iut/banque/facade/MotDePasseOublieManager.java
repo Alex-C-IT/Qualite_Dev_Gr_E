@@ -95,6 +95,6 @@ public class MotDePasseOublieManager {
                 AUTH_EMAIL,
                 utilisateur.getMail(),
                 "IUTBank - Mot de passe oublié",
-                "Bonjour" + utilisateur.getNom() + " " + utilisateur.getPrenom() + ". Votre nouveau mot de passe est : " + nouveauMotDePasse);
+                "Bonjour " + utilisateur.getNom() + " " + utilisateur.getPrenom() + ".<br><br>Votre nouveau mot de passe est : " + nouveauMotDePasse + " .<br><br>Cordialement,<br>L'équipe IUTBank.");
     }
 }

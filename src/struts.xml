@@ -299,7 +299,7 @@
 
 		<!-- Mot de passe oublié -->
 		<action name="motDePasseOublie" class="com.iut.banque.controller.MotDePasseOublie"
-			method="renvoyerNouveauMotDePasse">
+			method="execute">
 			<result name="SUCCESS" type="redirectAction">
 				<param name="actionName">redirectionLogin</param>
 				<param name="result">SUCCESS</param>

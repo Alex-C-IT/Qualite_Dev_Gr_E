@@ -19,6 +19,8 @@ import com.iut.banque.modele.CompteSansDecouvert;
 import com.iut.banque.modele.Gestionnaire;
 import com.iut.banque.modele.Utilisateur;
 
+import com.iut.banque.utils.BcryptHashing;
+
 /**
  * Implémentation de IDao utilisant Hibernate.
  * 
@@ -203,7 +205,8 @@ public class DaoHibernate implements IDao {
 				if (user == null) {
 					return false;
 				}
-				return (userPwd.equals(user.getUserPwd()));
+				// Vérification du mot de passe avec BcryptHashing.checkPassword()
+				return BcryptHashing.checkPassword(userPwd, user.getUserPwd());
 			}
 		}
 	}

@@ -35,15 +35,15 @@ public class EmailSender {
 
             msg.setSubject(subject, "UTF-8");
 
-            msg.setText(body, "UTF-8");
+            msg.setContent(body, "text/html; charset=utf-8");
 
             msg.setSentDate(new Date());
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            System.out.println("Message is ready");
+            System.out.println("Le message est prêt");
             Transport.send(msg);
 
-            System.out.println("EMail Sent Successfully!!");
+            System.out.println("Email envoyé avec succès.");
             return true;
         }
         catch (Exception e) {
