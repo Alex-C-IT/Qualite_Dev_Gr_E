@@ -20,6 +20,7 @@ public class CreerUtilisateur extends ActionSupport {
 	private String adresse;
 	private String userPwd;
 	private boolean male;
+	private String mail;
 	private boolean client;
 	private String numClient;
 	private String message;
@@ -201,9 +202,9 @@ public class CreerUtilisateur extends ActionSupport {
 	public String creationUtilisateur() {
 		try {
 			if (client) {
-				banque.createClient(userId, userPwd, nom, prenom, adresse, male, numClient);
+				banque.createClient(userId, userPwd, nom, prenom, adresse, male, mail, numClient);
 			} else {
-				banque.createManager(userId, userPwd, nom, prenom, adresse, male);
+				banque.createManager(userId, userPwd, nom, prenom, adresse, male, mail);
 			}
 			this.message = "Le nouvel utilisateur avec le user id '" + userId + "' a bien été crée.";
 			this.result = "SUCCESS";

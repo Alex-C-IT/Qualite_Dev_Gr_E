@@ -144,7 +144,7 @@ public class TestsClient {
 	@Test
 	public void testMethodePossedeComptesADecouvertPourClientAvecQueDesComptesSansDecouvert() {
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com", "j.doe1", "password", "1234567890");
 			c.addAccount(new CompteSansDecouvert("FR1234567890", 42, c));
 			c.addAccount(new CompteSansDecouvert("FR1234567891", 0, c));
 			if (c.possedeComptesADecouvert()) {
@@ -158,7 +158,7 @@ public class TestsClient {
 	@Test
 	public void testMethodePossedeComptesADecouvertPourClientSansComptes() {
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com","j.doe1", "password", "1234567890");
 			if (c.possedeComptesADecouvert()) {
 				fail("La méthode aurait du renvoyer faux");
 			}
@@ -170,7 +170,7 @@ public class TestsClient {
 	@Test
 	public void testMethodePossedeComptesADecouvertPourClientAvecUnCompteADecouvertParmisPlusieursTypesDeComptes() {
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com","j.doe1", "password", "1234567890");
 			c.addAccount(new CompteSansDecouvert("FR1234567890", 42, c));
 			c.addAccount(new CompteSansDecouvert("FR1234567891", 0, c));
 			c.addAccount(new CompteAvecDecouvert("FR1234567892", -42, 100, c));
@@ -186,7 +186,7 @@ public class TestsClient {
 	@Test
 	public void testMethodePossedeComptesADecouvertPourClientAvecPlusieursComptesADecouvertParmisPlusieursTypesDeComptes() {
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com", "j.doe1", "password", "1234567890");
 			c.addAccount(new CompteSansDecouvert("FR1234567890", 42, c));
 			c.addAccount(new CompteSansDecouvert("FR1234567891", 0, c));
 			c.addAccount(new CompteAvecDecouvert("FR1234567892", -42, 100, c));
@@ -204,7 +204,7 @@ public class TestsClient {
 	@Test
 	public void testMethodePossedeComptesADecouvertPourClientAvecUnUniqueCompteADecouvert() {
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com", "j.doe1", "password", "1234567890");
 			c.addAccount(new CompteAvecDecouvert("FR1234567892", -42, 100, c));
 			if (!c.possedeComptesADecouvert()) {
 				fail("La méthode aurait du renvoyer vrai");
@@ -220,7 +220,7 @@ public class TestsClient {
 	@Test
 	public void testMethodeGetCompteAvecSoldeNonNulAvecDeuxComptesAvecSoldeNul(){
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com", "j.doe1", "password", "1234567890");
 			c.addAccount(new CompteAvecDecouvert("FR1234567890",0,42,c));
 			c.addAccount(new CompteSansDecouvert("FR1234567891", 0, c));
 			if (c.getComptesAvecSoldeNonNul().size()!=0){
@@ -233,7 +233,7 @@ public class TestsClient {
 	@Test
 	public void testMethodeGetCompteAvecSoldeNonNulAvecUnCompteSansDecouvertAvecSoldeNonNul(){
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com", "j.doe1", "password", "1234567890");
 			c.addAccount(new CompteAvecDecouvert("FR1234567890",0,42,c));
 			c.addAccount(new CompteSansDecouvert("FR1234567891", 1, c));
 			if (c.getComptesAvecSoldeNonNul().get("FR1234567891")==null){
@@ -246,7 +246,7 @@ public class TestsClient {
 	@Test
 	public void testMethodeGetCompteAvecSoldeNonNulAvecUnCompteAvecDecouvertAvecSoldeNonNul(){
 		try {
-			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "j.doe1", "password", "1234567890");
+			Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com", "j.doe1", "password", "1234567890");
 			c.addAccount(new CompteAvecDecouvert("FR1234567890",1,42,c));
 			c.addAccount(new CompteSansDecouvert("FR1234567891", 0, c));
 			if (c.getComptesAvecSoldeNonNul().get("FR1234567890")==null){

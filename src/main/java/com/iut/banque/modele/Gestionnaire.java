@@ -21,8 +21,8 @@ public class Gestionnaire extends Utilisateur {
 	 * objet au lieu d'appeler ce constructeur.
 	 * @throws IllegalFormatException 
 	 */
-	public Gestionnaire(String nom, String prenom, String adresse, boolean homme, String usrId, String usrPwd) throws IllegalFormatException {
-		super(nom, prenom, adresse, homme, usrId, usrPwd);
+	public Gestionnaire(String nom, String prenom, String adresse, boolean homme, String mail, String usrId, String usrPwd) throws IllegalFormatException {
+		super(nom, prenom, adresse, homme, mail, usrId, usrPwd);
 		if ("".equals(usrId)) {
 			throw new IllegalArgumentException("L'identifiant ne peux être vide.");
 		}
@@ -48,6 +48,6 @@ public class Gestionnaire extends Utilisateur {
 	@Override
 	public String toString() {
 		return "Gestionnaire [nom=" + getNom() + ", prenom=" + getPrenom() + ", adresse=" + getAdresse() + ", male="
-				+ isMale() + ", userId=" + getUserId() + ", userPwd=" + getUserPwd() + "]";
+				+ isMale() + ", email = " + getMail() + ", userId=" + getUserId() + ", userPwd=" + getUserPwd() + "]";
 	}
 }

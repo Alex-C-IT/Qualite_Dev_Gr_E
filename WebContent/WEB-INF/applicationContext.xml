@@ -81,6 +81,12 @@
 		<property name="dao" ref="daoHibernate" />
 	</bean>
 
+	<!-- Injection de la Dao dans le MdpOublieManager par le setter -->
+	<bean id="mdpOublieManager" class="com.iut.banque.facade.MotDePasseOublieManager">
+		<property name="dao" ref="daoHibernate" />
+	</bean>
+
+
 	<!-- ============= Converter ============= -->
 
 	<!-- Injection de la Dao dans le ClientConverter par le constructeur -->

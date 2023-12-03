@@ -29,7 +29,7 @@ public class TestsBanqueManager {
 	public void TestCreationDunClient() {
 		try {
 			bm.loadAllClients();
-			bm.createClient("t.test1", "password", "test1nom", "test1prenom", "test town", true, "4242424242");
+			bm.createClient("t.test1", "password", "test1nom", "test1prenom", "test town", true, "mail@mail.com" ,"4242424242");
 		} catch (IllegalOperationException e) {
 			e.printStackTrace();
 			fail("IllegalOperationException récupérée : " + e.getStackTrace());
@@ -43,7 +43,7 @@ public class TestsBanqueManager {
 	public void TestCreationDunClientAvecDeuxNumerosDeCompteIdentiques() {
 		try {
 			bm.loadAllClients();
-			bm.createClient("t.test1", "password", "test1nom", "test1prenom", "test town", true, "0101010101");
+			bm.createClient("t.test1", "password", "test1nom", "test1prenom", "test town", true, "mail@mail.com","0101010101");
 			fail();
 		} catch (IllegalOperationException e) {
 		} catch (Exception te) {

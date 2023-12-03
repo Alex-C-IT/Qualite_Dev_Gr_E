@@ -211,7 +211,7 @@ public class TestsDaoHibernate {
 	public void testCreateUser() {
 		try {
 			try {
-				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true, "c.new1", "PASS", false, "5544554455");
+				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true,"mail@mail.com" ,"c.new1", "PASS", false, "5544554455");
 			} catch (IllegalArgumentException e) {
 				fail("Il ne devrait pas y avoir d'exception ici");
 			} catch (IllegalFormatException e) {
@@ -233,7 +233,7 @@ public class TestsDaoHibernate {
 	public void testCreateUserExistingId() {
 		try {
 			try {
-				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true, "c.exist", "PASS", false, "9898989898");
+				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true, "mail@mail.com","c.exist", "PASS", false, "9898989898");
 			} catch (IllegalArgumentException e) {
 				fail("Il ne devrait pas y avoir d'exception ici");
 				e.printStackTrace();
@@ -251,7 +251,7 @@ public class TestsDaoHibernate {
 	public void testCreateGestionnaire() {
 		try {
 			try {
-				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true, "g.new", "PASS", true, "9898989898");
+				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true, "mail@mail.com","g.new", "PASS", true, "9898989898");
 			} catch (IllegalArgumentException | IllegalFormatException e) {
 				fail("Il ne devrait pas y avoir d'exception ici");
 				e.printStackTrace();
@@ -269,7 +269,7 @@ public class TestsDaoHibernate {
 	public void testCreateClient() {
 		try {
 			try {
-				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true, "c.new1", "PASS", false, "9898989898");
+				daoHibernate.createUser("NOM", "PRENOM", "ADRESSE", true, "mail@mail.com", "c.new1", "PASS", false, "9898989898");
 			} catch (IllegalArgumentException | IllegalFormatException e) {
 				fail("Il ne devrait pas y avoir d'exception ici");
 				e.printStackTrace();

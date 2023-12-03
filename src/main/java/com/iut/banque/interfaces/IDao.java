@@ -108,7 +108,7 @@ public interface IDao {
 	 * @throws IllegalArgumentException 
 	 */
 	Utilisateur createUser(String nom, String prenom, String adresse,
-			boolean male, String usrId, String usrPwd, boolean manager,
+			boolean male, String mail, String usrId, String usrPwd, boolean manager,
 			String numClient) throws TechnicalException, IllegalArgumentException, IllegalFormatException;
 
 	/**

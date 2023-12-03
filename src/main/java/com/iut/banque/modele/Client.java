@@ -95,9 +95,9 @@ public class Client extends Utilisateur {
 	 * @throws IllegalFormatException
 	 * @throws IllegalArgumentException
 	 */
-	public Client(String nom, String prenom, String adresse, boolean homme, String usrId, String usrPwd,
+	public Client(String nom, String prenom, String adresse, boolean homme, String email, String usrId, String usrPwd,
 			String numeroClient) throws IllegalArgumentException, IllegalFormatException {
-		super(nom, prenom, adresse, homme, null, usrPwd);
+		super(nom, prenom, adresse, homme, email, null, usrPwd);
 		setUserId(usrId);
 		setNumeroClient(numeroClient);
 		this.accounts = new HashMap<String, Compte>();
@@ -122,7 +122,7 @@ public class Client extends Utilisateur {
 	 */
 	public String toString() {
 		return "Client [userId=" + getUserId() + ", nom=" + getNom() + ", prenom=" + getPrenom() + ", adresse="
-				+ getAdresse() + ", male=" + isMale() + ", userPwd=" + getUserPwd() + ", numeroClient=" + numeroClient
+				+ getAdresse() + ", male=" + isMale() + ", email=" + getMail() + ", userPwd=" + getUserPwd() + ", numeroClient=" + numeroClient
 				+ ", accounts=" + accounts.size() + "]";
 	}
 

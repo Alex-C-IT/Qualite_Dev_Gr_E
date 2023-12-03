@@ -70,6 +70,12 @@ public abstract class Utilisateur {
 	private boolean male;
 
 	/**
+	 * L'email de l'utilisateur.
+	 */
+	@Column(name = "mail")
+	private String mail;
+
+	/**
 	 * @return String, le nom de l'utilisateur.
 	 */
 	public String getNom() {
@@ -161,6 +167,20 @@ public abstract class Utilisateur {
 	}
 
 	/**
+	 * @return mail : l'email de l'utilisateur
+	 */
+	public String getMail() {
+		return this.mail;
+	}
+
+	/**
+	 * @param mail : l'email de l'utilisateur
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	/**
 	 * Constructeur de Utilisateur avec tous les champs de la classe comme
 	 * paramètres.
 	 * 
@@ -171,15 +191,17 @@ public abstract class Utilisateur {
 	 * @param prenom
 	 * @param adresse
 	 * @param male
+	 * @param email
 	 * @param userId
 	 * @param userPwd
 	 */
-	public Utilisateur(String nom, String prenom, String adresse, boolean male, String userId, String userPwd) {
+	public Utilisateur(String nom, String prenom, String adresse, boolean male, String email, String userId, String userPwd) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.adresse = adresse;
 		this.male = male;
+		this.mail = email;
 		this.userId = userId;
 		this.userPwd = userPwd;
 	}
@@ -204,7 +226,7 @@ public abstract class Utilisateur {
 	@Override
 	public String toString() {
 		return "Utilisateur [userId=" + userId + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse
-				+ ", male=" + male + ", userPwd=" + userPwd + "]";
+				+ ", male=" + male + ", email =" + this.mail + ", userPwd=" + userPwd + "]";
 	}
 
 }

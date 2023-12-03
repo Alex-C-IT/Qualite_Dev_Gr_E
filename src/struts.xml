@@ -297,5 +297,28 @@
 			<result>/JSP/CreerUtilisateur.jsp</result>
 		</action>
 
+		<!-- Mot de passe oublié -->
+		<action name="motDePasseOublie" class="com.iut.banque.controller.MotDePasseOublie"
+			method="renvoyerNouveauMotDePasse">
+			<result name="SUCCESS" type="redirectAction">
+				<param name="actionName">redirectionLogin</param>
+				<param name="result">SUCCESS</param>
+				<param name="message">%{message}</param>
+			</result>
+			<result name="ERROR" type="redirectAction">
+				<param name="actionName">urlMotDePasseOublie</param>
+				<param name="result">ERROR</param>
+				<param name="message">%{message}</param>
+			</result>
+			<result type="redirectAction">
+				<param name="actionName">urlMotDePasseOublie</param>
+				<param name="result">VANILLA</param>
+			</result>
+		</action>
+
+		<action name="urlMotDePasseOublie">
+			<result>/JSP/MotDePasseOublie.jsp</result>
+		</action>
+
 	</package>
 </struts>

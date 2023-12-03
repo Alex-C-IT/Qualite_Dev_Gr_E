@@ -12,6 +12,7 @@ import com.iut.banque.modele.Compte;
 import com.iut.banque.modele.CompteAvecDecouvert;
 import com.iut.banque.modele.Gestionnaire;
 import com.iut.banque.modele.Utilisateur;
+import com.iut.banque.utils.BcryptHashing;
 
 public class BanqueFacade {
 
@@ -182,10 +183,10 @@ public class BanqueFacade {
 	 * @throws IllegalFormatException
 	 * @throws IllegalArgumentException
 	 */
-	public void createManager(String userId, String userPwd, String nom, String prenom, String adresse, boolean male)
+	public void createManager(String userId, String userPwd, String nom, String prenom, String adresse, boolean male, String mail)
 			throws TechnicalException, IllegalArgumentException, IllegalFormatException {
 		if (loginManager.getConnectedUser() instanceof Gestionnaire) {
-			banqueManager.createManager(userId, userPwd, nom, prenom, adresse, male);
+			banqueManager.createManager(userId, userPwd, nom, prenom, adresse, male, mail);
 			;
 		}
 	}
@@ -210,11 +211,11 @@ public class BanqueFacade {
 	 * @throws IllegalFormatException
 	 * @throws IllegalArgumentException
 	 */
-	public void createClient(String userId, String userPwd, String nom, String prenom, String adresse, boolean male,
+	public void createClient(String userId, String userPwd, String nom, String prenom, String adresse, boolean male, String mail,
 			String numeroClient)
 			throws IllegalOperationException, TechnicalException, IllegalArgumentException, IllegalFormatException {
 		if (loginManager.getConnectedUser() instanceof Gestionnaire) {
-			banqueManager.createClient(userId, userPwd, nom, prenom, adresse, male, numeroClient);
+			banqueManager.createClient(userId, userPwd, nom, prenom, adresse, male, mail, numeroClient);
 		}
 	}
 
