@@ -37,11 +37,10 @@
 		base de la connection -->
 	<bean id="dataSource" scope="singleton"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/coa_banque_essais" />
-		<property name="username" value="root" />
-		<property name="password" value="" />
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://db4free.net:3306/coa_banque_test?useSSL=false" />
+		<property name="username" value="coa_banque_test" />
+		<property name="password"  value="Azerty123*" />
 		<!-- Nécessaire, sinon les test se font quand même -->
 		<property name="defaultAutoCommit" value="false" />
 	</bean>
