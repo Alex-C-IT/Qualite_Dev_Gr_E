@@ -1,5 +1,6 @@
 package com.iut.banque.controller;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -9,6 +10,8 @@ import com.iut.banque.exceptions.IllegalOperationException;
 import com.iut.banque.exceptions.TechnicalException;
 import com.iut.banque.facade.BanqueFacade;
 import com.opensymphony.xwork2.ActionSupport;
+
+import com.iut.banque.utils.BcryptHashing;
 
 public class CreerUtilisateur extends ActionSupport {
 
@@ -147,6 +150,20 @@ public class CreerUtilisateur extends ActionSupport {
 	}
 
 	/**
+	 * @return the mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @param mail the mail to set
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	/**
 	 * Constructeur sans paramêtre de CreerUtilisateur
 	 */
 	public CreerUtilisateur() {
@@ -202,15 +219,15 @@ public class CreerUtilisateur extends ActionSupport {
 	public String creationUtilisateur() {
 		try {
 			if (client) {
-				banque.createClient(userId, userPwd, nom, prenom, adresse, male, mail, numClient);
+				banque.createClient(userId, BcryptHashing.hashPassword(userPwd), nom, prenom, adresse, male, mail, numClient);
 			} else {
-				banque.createManager(userId, userPwd, nom, prenom, adresse, male, mail);
+				banque.createManager(userId, BcryptHashing.hashPassword(userPwd), nom, prenom, adresse, male, mail);
 			}
 			this.message = "Le nouvel utilisateur avec le user id '" + userId + "' a bien été crée.";
 			this.result = "SUCCESS";
 			return "SUCCESS";
 		} catch (IllegalOperationException e) {
-			this.message = "L'identifiant à déjà été assigné à un autre utilisateur de la banque.";
+			this.message = "L'identifiant a déjà été assigné à un autre utilisateur de la banque.";
 			this.result = "ERROR";
 			return "ERROR";
 		} catch (TechnicalException e) {

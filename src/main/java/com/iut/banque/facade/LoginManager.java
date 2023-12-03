@@ -5,6 +5,8 @@ import com.iut.banque.interfaces.IDao;
 import com.iut.banque.modele.Gestionnaire;
 import com.iut.banque.modele.Utilisateur;
 
+import com.iut.banque.utils.BcryptHashing;
+
 public class LoginManager {
 
 	private IDao dao;
@@ -37,16 +39,19 @@ public class LoginManager {
 	 *         l'état du login
 	 */
 	public int tryLogin(String userCde, String userPwd) {
-		if (dao.isUserAllowed(userCde, userPwd)) {
+		// Vérifie que l'utilisateur existe dans la base de données
+		if (dao.isUserAllowedWithoutPassword(userCde)) {
 			user = dao.getUserById(userCde);
-			if (user instanceof Gestionnaire) {
-				return LoginConstants.MANAGER_IS_CONNECTED;
-			} else {
-				return LoginConstants.USER_IS_CONNECTED;
+			// Vérifie que le mot passe est correct avec l'outil de hashage
+			if (BcryptHashing.checkPassword(userPwd, user.getUserPwd())) {
+				if (user instanceof Gestionnaire) {
+					return LoginConstants.MANAGER_IS_CONNECTED;
+				} else {
+					return LoginConstants.USER_IS_CONNECTED;
+				}
 			}
-		} else {
-			return LoginConstants.LOGIN_FAILED;
 		}
+		return LoginConstants.LOGIN_FAILED;
 	}
 
 	/**
