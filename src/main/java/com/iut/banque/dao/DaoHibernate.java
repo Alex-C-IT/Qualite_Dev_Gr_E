@@ -211,6 +211,7 @@ public class DaoHibernate implements IDao {
 				}
 			} catch (Exception e) {
 				System.out.println("Erreur lors de l'ouverture de la session : " + e);
+			} finally {
 				if(session != null)
 					session.close();
 			}
