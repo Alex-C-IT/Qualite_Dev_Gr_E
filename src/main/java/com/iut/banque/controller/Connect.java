@@ -68,6 +68,9 @@ public class Connect extends ActionSupport {
 		case LoginConstants.LOGIN_FAILED:
 			System.out.println("login failed");
 			return "ERROR";
+		case LoginConstants.LOGIN_BLOQUED:
+			System.out.println("login bloqued");
+			return "ERROR_BLOQUED";
 		default:
 			System.out.println("error");
 			return "ERROR";

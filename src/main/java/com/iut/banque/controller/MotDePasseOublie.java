@@ -1,9 +1,13 @@
 package com.iut.banque.controller;
 
 import com.iut.banque.facade.MotDePasseOublieManager;
+import com.iut.banque.interfaces.IDao;
+import com.iut.banque.modele.Utilisateur;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.iut.banque.facade.BanqueManager;
 
 /**
  * Classe MotDePasseOublie
@@ -17,6 +21,8 @@ public class MotDePasseOublie {
     private String result;
 
     private MotDePasseOublieManager motDePasseOublieManager;
+
+    private IDao dao;
 
     /**
      * Constructeur de la classe MotDePasseOublie

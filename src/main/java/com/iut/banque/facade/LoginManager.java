@@ -45,6 +45,10 @@ public class LoginManager {
 				return LoginConstants.USER_IS_CONNECTED;
 			}
 		} else {
+			user = dao.getUserById(userCde);
+			if(user != null && user.getNbTentativesConnect() >= 3) {
+				return LoginConstants.LOGIN_BLOQUED;
+			}
 			return LoginConstants.LOGIN_FAILED;
 		}
 	}

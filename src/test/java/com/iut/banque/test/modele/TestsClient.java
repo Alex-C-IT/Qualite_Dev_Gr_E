@@ -312,6 +312,30 @@ public class TestsClient {
 	}
 
 	@Test
+	public void testGetNbTentativesConnect() throws IllegalFormatException {
+		// Création d'un client
+		Client client = new Client();
+
+		// Vérification que le nombre de tentatives de connexion est initialisé à 0
+		assertEquals(0, client.getNbTentativesConnect());
+
+		// Incrémentation du nombre de tentatives de connexion
+		client.setNbTentativesConnect(client.getNbTentativesConnect() + 1);
+
+		// Vérification que le nombre de tentatives de connexion est bien incrémenté
+		assertEquals(1, client.getNbTentativesConnect());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNbTentativesConnectToujoursPositif() {
+		// Création d'un client
+		Client client = new Client();
+
+		// Tentative d'assignation d'un nombre de tentatives de connexion négatif
+		client.setNbTentativesConnect(-1);
+	}
+
+	@Test
 	public void testSetNumeroClient() throws IllegalFormatException
 	{
 		// Création d'un client

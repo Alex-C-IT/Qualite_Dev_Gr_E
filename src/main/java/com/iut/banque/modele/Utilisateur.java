@@ -76,6 +76,12 @@ public abstract class Utilisateur {
 	private String mail;
 
 	/**
+	 * Nombre de tentatives de connexion échouées.
+	 */
+	@Column(name = "nbTentativesConnect")
+	private int nbTentativesConnect;
+
+	/**
 	 * @return String, le nom de l'utilisateur.
 	 */
 	public String getNom() {
@@ -181,6 +187,25 @@ public abstract class Utilisateur {
 	}
 
 	/**
+	 * @return nbTentativesConnect : le nombre de tentatives de connexion
+	 *         échouées
+	 */
+	public int getNbTentativesConnect() {
+		return nbTentativesConnect;
+	}
+
+	/**
+	 * @param nbTentativesConnect : le nombre de tentatives de connexion
+	 *         échouées
+	 */
+	public void setNbTentativesConnect(int nbTentativesConnect) {
+		if(nbTentativesConnect < 0)
+			throw new IllegalArgumentException("Le nombre de tentatives de connexion ne peut pas être négatif");
+
+		this.nbTentativesConnect = nbTentativesConnect;
+	}
+
+	/**
 	 * Constructeur de Utilisateur avec tous les champs de la classe comme
 	 * paramètres.
 	 * 
@@ -204,6 +229,7 @@ public abstract class Utilisateur {
 		this.mail = email;
 		this.userId = userId;
 		this.userPwd = userPwd;
+		this.nbTentativesConnect = 0;
 	}
 
 	/**

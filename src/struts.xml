@@ -28,6 +28,7 @@
 			<result name="SUCCESS">/JSP/{2}.jsp</result>
 			<result name="SUCCESSMANAGER">/JSP/{2}-Manager.jsp</result>
 			<result name="ERROR">/JSP/{2}-error.jsp</result>
+			<result name="ERROR_BLOQUED">/JSP/{2}-bloque.jsp</result>
 			<result name="LISTCLIENTS">/JSP/ListClients.jsp</result>
 			<result>/JSP/{2}.jsp</result>
 			<!-- <result name="LOGIN">Login.jsp</result> -->

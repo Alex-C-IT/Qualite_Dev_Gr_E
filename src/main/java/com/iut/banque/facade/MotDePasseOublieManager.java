@@ -54,6 +54,9 @@ public class MotDePasseOublieManager {
 
                 // Modification du mot de passe de l'utilisateur
                 utilisateur.setUserPwd(BcryptHashing.hashPassword(nouveauMotDePasse));
+                // Réinitialisation du nombre de tentatives de connexion
+                utilisateur.setNbTentativesConnect(0);
+                // Mise à jour de l'utilisateur dans la base de données
                 dao.updateUser(utilisateur);
 
                 // Envoi de l'email

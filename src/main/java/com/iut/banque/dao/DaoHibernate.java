@@ -205,8 +205,28 @@ public class DaoHibernate implements IDao {
 				if (user == null) {
 					return false;
 				}
+
+				// Si le nombre de tentatives de connexion est supérieure ou égale à 3, on bloque l'utilisateur
+				if (user.getNbTentativesConnect() >= 3) {
+					return false;
+				}
+
 				// Vérification du mot de passe avec BcryptHashing.checkPassword()
-				return BcryptHashing.checkPassword(userPwd, user.getUserPwd());
+				boolean motDePasseConcorde = BcryptHashing.checkPassword(userPwd, user.getUserPwd());
+
+				// Gestion des tentatives de connexion
+				if (motDePasseConcorde) {
+					// Pas de modification si le nombre de tentatives de connexion est à 0;
+					if (user.getNbTentativesConnect() != 0) {
+						user.setNbTentativesConnect(0);
+						session.update(user);
+					}
+					return true;
+				} else {
+					user.setNbTentativesConnect(user.getNbTentativesConnect() + 1);
+					session.update(user);
+					return false;
+				}
 			}
 		}
 	}
