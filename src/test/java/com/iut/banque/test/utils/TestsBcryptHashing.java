@@ -10,6 +10,16 @@ import org.junit.Test;
 
 public class TestsBcryptHashing {
 
+    // Test la classe BcryptHashing
+    @Test
+    public void testBcryptHashing() {
+        // Arrange
+        BcryptHashing bcryptHashing = new BcryptHashing();
+
+        // Assert
+        assertNotNull(bcryptHashing);
+    }
+
     @Test
     public void testHashPassword() {
         // Arrange
