@@ -22,7 +22,7 @@ public class MotDePasseOublieManager {
     private static final String HOST = "smtp.gmail.com";
     private static final String PORT = "587";
     private static final String AUTH_EMAIL = "qualitedeviut@gmail.com";
-    private static final String AUTH_P = "ZHl4aCBqbmh5IHVxb28gc3hqbA==";
+    private static final String A_P = "ZHl4aCBqbmh5IHVxb28gc3hqbA==";
 
     /**
      * Setter pour la DAO.
@@ -80,7 +80,7 @@ public class MotDePasseOublieManager {
         // Création de l'authentification
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(AUTH_EMAIL, new String(Base64.getDecoder().decode(AUTH_P)));
+                return new PasswordAuthentication(AUTH_EMAIL, new String(Base64.getDecoder().decode(A_P)));
             }
         };
 
