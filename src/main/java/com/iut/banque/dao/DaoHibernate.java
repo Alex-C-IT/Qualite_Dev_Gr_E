@@ -195,27 +195,19 @@ public class DaoHibernate implements IDao {
 		if (userId == null || userPwd == null) {
 			return false;
 		} else {
-			try {
-				session = sessionFactory.openSession();
-				userId = userId.trim();
-				if ("".equals(userId) || "".equals(userPwd)) {
+			session = sessionFactory.openSession();
+			userId = userId.trim();
+			if ("".equals(userId) || "".equals(userPwd)) {
+				return false;
+			} else {
+				session = sessionFactory.getCurrentSession();
+				Utilisateur user = session.get(Utilisateur.class, userId);
+				if (user == null) {
 					return false;
-				} else {
-					session = sessionFactory.getCurrentSession();
-					Utilisateur user = session.get(Utilisateur.class, userId);
-					if (user == null) {
-						return false;
-					}
-					// Vérification du mot de passe avec BcryptHashing.checkPassword()
-					return BcryptHashing.checkPassword(userPwd, user.getUserPwd());
 				}
-			} catch (Exception e) {
-				System.out.println("Erreur lors de l'ouverture de la session : " + e);
-			} finally {
-				if(session != null)
-					session.close();
+				// Vérification du mot de passe avec BcryptHashing.checkPassword()
+				return BcryptHashing.checkPassword(userPwd, user.getUserPwd());
 			}
-			return false;
 		}
 	}
 
