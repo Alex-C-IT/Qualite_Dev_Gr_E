@@ -1,12 +1,18 @@
 package com.iut.banque.test.modele;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import com.iut.banque.exceptions.IllegalFormatException;
+import com.iut.banque.modele.Gestionnaire;
 import org.junit.Test;
 
 import com.iut.banque.modele.Client;
 import com.iut.banque.modele.CompteAvecDecouvert;
 import com.iut.banque.modele.CompteSansDecouvert;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestsClient {
 
@@ -257,4 +263,92 @@ public class TestsClient {
 		}
 	}
 
+	//test pour la méthode ToString()
+	@Test
+	public void testToString() throws IllegalFormatException {
+		// Création d'un client pour le test
+		Client c = new Client("John", "Doe", "20 rue Bouvier", true, "mail@mail.com", "j.doe1", "password", "1234567890");
+
+		// Définition de la chaîne attendue
+		String expectedToString = "Client [userId=j.doe1, nom=John, prenom=Doe, adresse=20 rue Bouvier, male=true, email=mail@mail.com, userPwd=password, numeroClient=1234567890, accounts=0]";
+
+		// Appel de la méthode toString() et vérification
+		assertEquals(expectedToString, c.toString());
+	}
+
+	@Test(expected = IllegalFormatException.class)
+	public void testSetUserIdIllegalFormat() throws IllegalFormatException {
+		// Création d'un client
+		Client client = new Client();
+
+		// Appel de la méthode setUserId avec un identifiant non conforme au format
+		client.setUserId("invalidUserId");
+	}
+
+	@Test(expected = IllegalFormatException.class)
+	public void testSetUserIdValidFormat() throws IllegalFormatException {
+		// Création d'un client
+		Client client = new Client();
+
+		// Appel de la méthode setUserId avec un identifiant conforme au format
+		client.setUserId("validUserId");
+
+		// Aucune exception ne devrait être levée si l'identifiant est conforme
+	}
+
+	@Test
+	public void testGetIdentity() throws IllegalFormatException {
+		// Création d'un client
+		Client client = new Client();
+		client.setPrenom("John");
+		client.setNom("Doe");
+		client.setNumeroClient("1234567890");
+
+		// Appel de la méthode getIdentity
+		String identity = client.getIdentity();
+
+		// Vérification que la chaîne retournée est conforme aux attentes
+		assertEquals("John Doe (1234567890)", identity);
+	}
+
+	@Test
+	public void testSetNumeroClient() throws IllegalFormatException
+	{
+		// Création d'un client
+		Client client = new Client();
+		// Numéro de client valide
+		String validNumeroClient = "1234567890";
+		// Numéro de client vide
+		String emptyNumeroClient = "";
+		// Numéro de client non conforme au format attendu
+		String invalidFormatNumeroClient = "invalid";
+
+		try {
+			// Tentative d'appel de la méthode avec un numéro de client vide
+			client.setNumeroClient(emptyNumeroClient);
+
+			// Si aucune exception n'est lancée pour le cas invalide, le test échoue
+			fail("IllegalFormatException non détectée pour un numéro de client vide.");
+
+		} catch (IllegalFormatException e) {
+			// Succès pour le cas où une exception IllegalFormatException est lancée pour un numéro de client vide
+		}
+
+		try {
+			// Tentative d'appel de la méthode avec un numéro de client non conforme au format attendu
+			client.setNumeroClient(invalidFormatNumeroClient);
+
+			// Si aucune exception n'est lancée pour le cas invalide, le test échoue
+			fail("IllegalFormatException non détectée pour un numéro de client non conforme au format attendu.");
+
+		} catch (IllegalFormatException e) {
+			// Succès pour le cas où une exception IllegalFormatException est lancée pour un numéro de client non conforme
+		}
+
+		// Appel de la méthode avec un numéro de client valide
+		client.setNumeroClient(validNumeroClient);
+
+		// Vérification que la propriété numeroClient a été correctement assignée
+		assertEquals(validNumeroClient, client.getNumeroClient());
+	}
 }
