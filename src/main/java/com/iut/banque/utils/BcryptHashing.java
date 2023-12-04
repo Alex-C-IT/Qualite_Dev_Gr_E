@@ -1,6 +1,8 @@
 package com.iut.banque.utils;
 
+import java.security.SecureRandom;
 import at.favre.lib.crypto.bcrypt.BCrypt;
+
 
 /**
  * Classe utilitaire pour le hashage des mots de passe avec BCrypt.
@@ -37,12 +39,7 @@ public class BcryptHashing {
      * @return un mot de passe aléatoire
      */
     public static String genererMotDePasseAleatoire() {
-        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 10; i++) {
-            int index = (int) (Math.random() * chars.length());
-            sb.append(chars.charAt(index));
-        }
-        return sb.toString();
+        SecureRandom random = new SecureRandom();
+        return Long.toString(Math.abs(random.nextLong()), 36);
     }
 }
