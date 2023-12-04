@@ -20,12 +20,12 @@
 			Bienvenue <b><s:property value="connectedUser.prenom" /> <s:property
 					value="connectedUser.nom" /></b> !
 		</p>
-		<p>Voici l'état de vos comptes :</p>
 		<table>
+			<caption>État de vos comptes</caption>
 			<tr>
-				<td><b>Numéro de compte</b></td>
-				<td><b>Type de compte</b></td>
-				<td><b>Solde actuel</b></td>
+				<th><b>Numéro de compte</b></th>
+				<th><b>Type de compte</b></th>
+				<th><b>Solde actuel</b></th>
 			</tr>
 			<s:iterator value="accounts">
 				<tr>
