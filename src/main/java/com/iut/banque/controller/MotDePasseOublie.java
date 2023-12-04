@@ -54,7 +54,7 @@ public class MotDePasseOublie {
                 return this.result;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Erreur lors de l'envoi de l'email : " + e);
             this.message = "Erreur lors de l'envoi de l'email.";
             this.result = "ERROR";
             return this.result;

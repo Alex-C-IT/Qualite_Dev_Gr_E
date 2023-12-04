@@ -1,6 +1,11 @@
 package com.iut.banque.utils;
 
-import javax.mail.*;
+
+import jdk.nashorn.internal.runtime.Debug;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
@@ -47,7 +52,7 @@ public class EmailSender {
             return true;
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Erreur lors de l'envoi de l'email : " + e);
         }
         return false;
     }
