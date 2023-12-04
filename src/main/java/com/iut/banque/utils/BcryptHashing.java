@@ -40,6 +40,6 @@ public class BcryptHashing {
      */
     public static String genererMotDePasseAleatoire() {
         SecureRandom random = new SecureRandom();
-        return Long.toString(Math.abs(random.nextLong()), 36);
+        return Long.toString(random.nextLong(), 36);
     }
 }
