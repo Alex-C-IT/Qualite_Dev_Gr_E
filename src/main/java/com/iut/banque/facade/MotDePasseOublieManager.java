@@ -2,8 +2,6 @@ package com.iut.banque.facade;
 
 import com.iut.banque.interfaces.IDao;
 import com.iut.banque.modele.Utilisateur;
-import com.iut.banque.interfaces.IDao;
-import com.iut.banque.modele.Utilisateur;
 import com.iut.banque.utils.BcryptHashing;
 import com.iut.banque.utils.EmailSender;
 
@@ -11,7 +9,7 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import java.util.Properties;
-
+import java.util.Base64;
 
 public class MotDePasseOublieManager {
 
@@ -24,7 +22,7 @@ public class MotDePasseOublieManager {
     private static final String HOST = "smtp.gmail.com";
     private static final String PORT = "587";
     private static final String AUTH_EMAIL = "qualitedeviut@gmail.com";
-    private static final String AUTH_PWD = "dyxh jnhy uqoo sxjl";
+    private static final String AUTH_P = "ZHl4aCBqbmh5IHVxb28gc3hqbA==";
 
     /**
      * Setter pour la DAO.
@@ -82,7 +80,7 @@ public class MotDePasseOublieManager {
         // Création de l'authentification
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(AUTH_EMAIL, AUTH_PWD);
+                return new PasswordAuthentication(AUTH_EMAIL, new String(Base64.getDecoder().decode(AUTH_P)));
             }
         };
 
