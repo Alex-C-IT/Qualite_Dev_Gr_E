@@ -2,6 +2,8 @@ package com.iut.banque.test.facade;
 
 import static org.junit.Assert.fail;
 
+import com.iut.banque.exceptions.IllegalFormatException;
+import com.iut.banque.exceptions.InsufficientFundsException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,53 @@ public class TestsBanqueManager {
 
 	@Autowired
 	private BanqueManager bm;
+
+
+	// Tests le credit d'un compte à partir de l'instance de BanqueManager
+	// public void crediter(Compte compte, double montant) throws IllegalFormatException
+	@Test
+	public void TestCrediterUnCompteBankMangager() {
+		try {
+			bm.loadAllClients();
+			bm.crediter(bm.getAccountById("CSDV000000"), 100);
+		} catch (IllegalFormatException e) {
+			e.printStackTrace();
+			fail("IllegalFormatException récupérée : " + e.getStackTrace());
+		} catch (Exception te) {
+			te.printStackTrace();
+			fail("Une Exception " + te.getClass().getSimpleName() + " a été récupérée");
+		}
+	}
+
+	// Tests le debit d'un compte à partir de l'instance de BanqueManager avec un montant insuffisant
+	// public void debiter(Compte compte, double montant) throws InsufficientFundsException, IllegalFormatException
+	@Test(expected = InsufficientFundsException.class)
+	public void TestDebiterUnCompteBankMangagerMontantInsuffisant() throws InsufficientFundsException, IllegalFormatException {
+		bm.loadAllClients();
+		bm.debiter(bm.getAccountById("CSDV000000"), 100.00);
+	}
+
+	// Tests le debit d'un compte à partir de l'instance de BanqueManager avec une exception IllegalFormatException
+	// public void debiter(Compte compte, double montant) throws InsufficientFundsException, IllegalFormatException
+	@Test(expected = IllegalFormatException.class)
+	public void TestDebiterUnCompteBankMangagerMontantIllegal() throws InsufficientFundsException, IllegalFormatException {
+		bm.loadAllClients();
+		bm.debiter(bm.getAccountById("CSDV000000"), -100.00);
+	}
+
+	// Tests la méthode getAllManagers de BanqueManager
+	// public Map<String, Client> getAllManagers()
+	// Éviter le retour d'erreur NullPointerException
+	@Test
+	public void TestGetAllManagers() {
+		try {
+			bm.loadAllGestionnaires();
+			bm.getAllManagers();
+		} catch (Exception te) {
+			te.printStackTrace();
+			fail("Une Exception " + te.getClass().getSimpleName() + " a été récupérée");
+		}
+	}
 
 	// Tests de par rapport à l'ajout d'un client
 	@Test
@@ -166,5 +215,6 @@ public class TestsBanqueManager {
 			fail("Une Exception " + te.getClass().getSimpleName() + " a été récupérée");
 		}
 	}
+
 
 }
