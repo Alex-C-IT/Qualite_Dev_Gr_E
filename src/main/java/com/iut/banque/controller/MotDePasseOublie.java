@@ -4,7 +4,6 @@ import com.iut.banque.facade.MotDePasseOublieManager;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import sun.security.util.Debug;
 
 /**
  * Classe MotDePasseOublie

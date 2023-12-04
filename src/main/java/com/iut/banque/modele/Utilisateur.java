@@ -225,8 +225,8 @@ public abstract class Utilisateur {
 	 */
 	@Override
 	public String toString() {
-		return "Utilisateur [userId=" + userId + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse
-				+ ", male=" + male + ", email =" + this.mail + ", userPwd=" + userPwd + "]";
+		return "Utilisateur [userId=" + this.userId + ", nom=" + this.nom + ", prenom=" + this.prenom + ", adresse=" + this.adresse
+				+ ", male=" + this.male + ", email =" + this.mail + ", userPwd=" + this.userPwd + "]";
 	}
 
 }

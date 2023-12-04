@@ -13,9 +13,9 @@ import java.util.Date;
  * Classe permettant d'envoyer un email
  */
 public class EmailSender {
+
     /**
      * Méthode pour envoyer un email
-     * @param session : une Session correspondant à l'authentification pour envoyer l'email
      * @param fromEmail: un String correspondant à l'email de l'emetteur
      * @param toEmail : un String correspondant à l'email de l'utilisateur qui cherche à récupérer son mot de passe
      * @param subject : un String correspondant au sujet de l'email
