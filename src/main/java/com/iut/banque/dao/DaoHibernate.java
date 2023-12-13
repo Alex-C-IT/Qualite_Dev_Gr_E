@@ -192,48 +192,43 @@ public class DaoHibernate implements IDao {
 	@Override
 	public boolean isUserAllowed(String userId, String userPwd) {
 		Session session = null;
-		if (userId == null || userPwd == null) {
-			return false;
+		if (userId == null || userPwd == null) return false;
+
+		try {
+			session = sessionFactory.openSession();
+		} catch (Exception e) {
+			System.out.println("Exception : " + e.getMessage());
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+		userId = userId.trim();
+		if ("".equals(userId) || "".equals(userPwd)) return false;
+
+		session = sessionFactory.getCurrentSession();
+		Utilisateur user = session.get(Utilisateur.class, userId);
+		if (user == null) return false;
+
+		// Si le nombre de tentatives de connexion est supérieure ou égale à 3, on bloque l'utilisateur
+		if (user.getNbTentativesConnect() >= 3) return false;
+
+		// Vérification du mot de passe avec BcryptHashing.checkPassword()
+		boolean motDePasseConcorde = BcryptHashing.checkPassword(userPwd, user.getUserPwd());
+
+		// Gestion des tentatives de connexion
+		if (motDePasseConcorde) {
+			// Pas de modification si le nombre de tentatives de connexion est à 0;
+			if (user.getNbTentativesConnect() != 0) {
+				user.setNbTentativesConnect(0);
+				session.update(user);
+			}
+			return true;
 		} else {
-			
-			try{
-				session = sessionFactory.openSession();
-			} catch (Exception e) {
-				System.out.println("Exception : " + e.getMessage());
-			}
-
-			userId = userId.trim();
-			if ("".equals(userId) || "".equals(userPwd)) {
-				return false;
-			} else {
-				session = sessionFactory.getCurrentSession();
-				Utilisateur user = session.get(Utilisateur.class, userId);
-				if (user == null) {
-					return false;
-				}
-
-				// Si le nombre de tentatives de connexion est supérieure ou égale à 3, on bloque l'utilisateur
-				if (user.getNbTentativesConnect() >= 3) {
-					return false;
-				}
-
-				// Vérification du mot de passe avec BcryptHashing.checkPassword()
-				boolean motDePasseConcorde = BcryptHashing.checkPassword(userPwd, user.getUserPwd());
-
-				// Gestion des tentatives de connexion
-				if (motDePasseConcorde) {
-					// Pas de modification si le nombre de tentatives de connexion est à 0;
-					if (user.getNbTentativesConnect() != 0) {
-						user.setNbTentativesConnect(0);
-						session.update(user);
-					}
-					return true;
-				} else {
-					user.setNbTentativesConnect(user.getNbTentativesConnect() + 1);
-					session.update(user);
-					return false;
-				}
-			}
+			user.setNbTentativesConnect(user.getNbTentativesConnect() + 1);
+			session.update(user);
+			return false;
 		}
 	}
 
