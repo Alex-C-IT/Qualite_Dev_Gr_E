@@ -3,7 +3,9 @@ package com.iut.banque.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import com.iut.banque.converter.ClientConverter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,11 +36,12 @@ import com.iut.banque.utils.BcryptHashing;
 @Transactional
 public class DaoHibernate implements IDao {
 
+	static final Logger loggerDaoHib = Logger.getLogger(DaoHibernate.class.getName());
 	private SessionFactory sessionFactory;
 
 	public DaoHibernate() {
-		System.out.println("==================");
-		System.out.println("Création de la Dao");
+		loggerDaoHib.info("==================");
+		loggerDaoHib.info("Création de la Dao");
 	}
 
 	/**
@@ -219,7 +222,6 @@ public class DaoHibernate implements IDao {
 
 		// Gestion des tentatives de connexion
 		if (motDePasseConcorde) {
-			// Pas de modification si le nombre de tentatives de connexion est à 0;
 			if (user.getNbTentativesConnect() != 0) {
 				user.setNbTentativesConnect(0);
 				session.update(user);
@@ -238,8 +240,7 @@ public class DaoHibernate implements IDao {
 	@Override
 	public Utilisateur getUserById(String id) {
 		Session session = sessionFactory.getCurrentSession();
-		Utilisateur user = session.get(Utilisateur.class, id);
-		return user;
+		return session.get(Utilisateur.class, id);
 	}
 
 	/**
@@ -277,7 +278,7 @@ public class DaoHibernate implements IDao {
 	 */
 	@Override
 	public void disconnect() {
-		System.out.println("Déconnexion de la DAO.");
+		loggerDaoHib.info("Déconnexion de la DAO.");
 	}
 
 }
