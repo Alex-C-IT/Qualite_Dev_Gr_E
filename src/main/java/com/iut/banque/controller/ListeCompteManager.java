@@ -166,4 +166,8 @@ public class ListeCompteManager extends ActionSupport {
 			return "ERROR";
 		}
 	}
+
+	public void setBanque(BanqueFacade mockBanque) {
+		this.banque = mockBanque;
+	}
 }

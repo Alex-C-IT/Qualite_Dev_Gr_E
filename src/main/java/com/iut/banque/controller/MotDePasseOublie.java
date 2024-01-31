@@ -99,4 +99,8 @@ public class MotDePasseOublie {
         this.result = result;
     }
 
+    public void setMotDePasseOublieManager(MotDePasseOublieManager motDePasseOublieManager)
+    {
+        this.motDePasseOublieManager = motDePasseOublieManager;
+    }
 }
