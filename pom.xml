@@ -185,6 +185,18 @@
 			<version>2.28.2</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>2.28.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.opensymphony</groupId>
+			<artifactId>xwork</artifactId>
+			<version>2.1.2</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 </project>

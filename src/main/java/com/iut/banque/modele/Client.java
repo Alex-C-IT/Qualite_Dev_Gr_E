@@ -230,4 +230,7 @@ public class Client extends Utilisateur {
 		return res;
 	}
 
+    public void setIdentity(String clientId) {
+
+    }
 }

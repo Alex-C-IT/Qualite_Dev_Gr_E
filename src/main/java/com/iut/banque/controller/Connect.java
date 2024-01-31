@@ -21,8 +21,8 @@ public class Connect extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private String userCde;
 	private String userPwd;
-	private final transient BanqueFacade banque;
-	transient Logger logger = Logger.getLogger(getClass().getName());
+	public transient BanqueFacade banque;
+	public transient Logger logger = Logger.getLogger(getClass().getName());
 	static final String ERROR = "ERROR";
 
 	/**
