@@ -13,18 +13,21 @@ import com.iut.banque.facade.BanqueFacade;
 import com.iut.banque.modele.Client;
 import com.iut.banque.modele.Compte;
 
+import java.util.logging.Logger;
+
 public class CreerCompte extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 	private String numeroCompte;
 	private boolean avecDecouvert;
 	private double decouvertAutorise;
-	private Client client;
+	private transient Client client;
 	private String message;
 	private boolean error;
 	private boolean result;
-	private BanqueFacade banque;
-	private Compte compte;
+	private transient BanqueFacade banque;
+	private transient Compte compte;
+	transient Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * @param compte
@@ -78,7 +81,7 @@ public class CreerCompte extends ActionSupport {
 	 * Constructeur sans paramêtre de CreerCompte
 	 */
 	public CreerCompte() {
-		System.out.println("In Constructor from CreerCompte class ");
+		logger.info("In Constructor from CreerCompte class ");
 		ApplicationContext context = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(ServletActionContext.getServletContext());
 		this.banque = (BanqueFacade) context.getBean("banqueFacade");
@@ -155,6 +158,7 @@ public class CreerCompte extends ActionSupport {
 		case "SUCCESS":
 			this.message = "Le compte " + compte.getNumeroCompte() + " a bien été créé.";
 			break;
+			default:
 		}
 	}
 
@@ -187,21 +191,20 @@ public class CreerCompte extends ActionSupport {
 	public String creationCompte() {
 		try {
 			if (avecDecouvert) {
-				try {
-					banque.createAccount(numeroCompte, client, decouvertAutorise);
-				} catch (IllegalOperationException e) {
-					e.printStackTrace();
-				}
+				banque.createAccount(numeroCompte, client, decouvertAutorise);
 			} else {
 				banque.createAccount(numeroCompte, client);
 			}
+
 			this.compte = banque.getCompte(numeroCompte);
 			return "SUCCESS";
 		} catch (TechnicalException e) {
 			return "NONUNIQUEID";
 		} catch (IllegalFormatException e) {
 			return "INVALIDFORMAT";
+		} catch (IllegalOperationException e) {
+			e.printStackTrace();
+			return "ILLEGALOPERATION";
 		}
-
 	}
 }

@@ -12,13 +12,18 @@ import com.iut.banque.modele.Compte;
 import com.iut.banque.modele.Gestionnaire;
 import com.opensymphony.xwork2.ActionSupport;
 
+import java.util.logging.Logger;
+
 public class DetailCompte extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
-	protected BanqueFacade banque;
+	protected transient BanqueFacade banque;
 	private String montant;
 	private String error;
-	protected Compte compte;
+	protected transient Compte compte;
+
+	transient Logger logger = Logger.getLogger(getClass().getName());
+	static final String NEGATIVEAMOUNT = "NEGATIVEAMOUNT";
 
 	/**
 	 * Constructeur du controlleur DetailCompte
@@ -29,7 +34,7 @@ public class DetailCompte extends ActionSupport {
 	 *         la factory
 	 */
 	public DetailCompte() {
-		System.out.println("In Constructor from DetailCompte class ");
+		logger.info("In Constructor from DetailCompte class ");
 		ApplicationContext context = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(ServletActionContext.getServletContext());
 		this.banque = (BanqueFacade) context.getBean("banqueFacade");
@@ -47,7 +52,7 @@ public class DetailCompte extends ActionSupport {
 			return "Erreur interne. Verifiez votre saisie puis réessayer. Contactez votre conseiller si le problème persiste.";
 		case "BUSINESS":
 			return "Fonds insuffisants.";
-		case "NEGATIVEAMOUNT":
+		case NEGATIVEAMOUNT:
 			return "Veuillez rentrer un montant positif.";
 		case "NEGATIVEOVERDRAFT":
 			return "Veuillez rentrer un découvert positif.";
@@ -104,12 +109,9 @@ public class DetailCompte extends ActionSupport {
 	 *         l'utilisateur
 	 */
 	public Compte getCompte() {
-		if (banque.getConnectedUser() instanceof Gestionnaire) {
+		if (banque.getConnectedUser() instanceof Gestionnaire ||
+				(banque.getConnectedUser() instanceof Client && ((Client) banque.getConnectedUser()).getAccounts().containsKey(compte.getNumeroCompte()))) {
 			return compte;
-		} else if (banque.getConnectedUser() instanceof Client) {
-			if (((Client) banque.getConnectedUser()).getAccounts().containsKey(compte.getNumeroCompte())) {
-				return compte;
-			}
 		}
 		return null;
 	}
@@ -125,9 +127,9 @@ public class DetailCompte extends ActionSupport {
 	 *         ou pas)
 	 */
 	public String debit() {
-		Compte compte = getCompte();
+		Compte compteLocal = getCompte();
 		try {
-			banque.debiter(compte, Double.parseDouble(montant.trim()));
+			banque.debiter(compteLocal, Double.parseDouble(montant.trim()));
 			return "SUCCESS";
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -137,7 +139,7 @@ public class DetailCompte extends ActionSupport {
 			return "NOTENOUGHFUNDS";
 		} catch (IllegalFormatException e) {
 			e.printStackTrace();
-			return "NEGATIVEAMOUNT";
+			return NEGATIVEAMOUNT;
 		}
 	}
 
@@ -148,16 +150,16 @@ public class DetailCompte extends ActionSupport {
 	 *         ou pas)
 	 */
 	public String credit() {
-		Compte compte = getCompte();
+		Compte compteLocal = getCompte();
 		try {
-			banque.crediter(compte, Double.parseDouble(montant.trim()));
+			banque.crediter(compteLocal, Double.parseDouble(montant.trim()));
 			return "SUCCESS";
 		} catch (NumberFormatException nfe) {
 			nfe.printStackTrace();
 			return "ERROR";
 		} catch (IllegalFormatException e) {
 			e.printStackTrace();
-			return "NEGATIVEAMOUNT";
+			return NEGATIVEAMOUNT;
 		}
 	}
 }

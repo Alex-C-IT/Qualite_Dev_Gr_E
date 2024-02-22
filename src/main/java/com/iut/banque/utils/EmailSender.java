@@ -1,11 +1,14 @@
 package com.iut.banque.utils;
 
+import com.iut.banque.dao.DaoHibernate;
+
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * Classe EmailSender
@@ -13,7 +16,7 @@ import java.util.Date;
  * Classe permettant d'envoyer un email
  */
 public class EmailSender {
-
+    static final Logger loggerEmail = Logger.getLogger(EmailSender.class.getName());
     /**
      * Méthode pour envoyer un email
      * @param fromEmail: un String correspondant à l'email de l'emetteur
@@ -42,14 +45,14 @@ public class EmailSender {
             msg.setSentDate(new Date());
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            System.out.println("Le message est prêt");
+            loggerEmail.info("Le message est prêt");
             Transport.send(msg);
 
-            System.out.println("Email envoyé avec succès.");
+            loggerEmail.info("Email envoyé avec succès.");
             return true;
         }
         catch (Exception e) {
-            System.out.println("Erreur lors de l'envoi de l'email : " + e);
+            loggerEmail.info("Erreur lors de l'envoi de l'email : " + e);
         }
         return false;
     }

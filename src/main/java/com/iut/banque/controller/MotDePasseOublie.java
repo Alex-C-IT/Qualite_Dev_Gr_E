@@ -2,12 +2,12 @@ package com.iut.banque.controller;
 
 import com.iut.banque.facade.MotDePasseOublieManager;
 import com.iut.banque.interfaces.IDao;
-import com.iut.banque.modele.Utilisateur;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.iut.banque.facade.BanqueManager;
+
+import java.util.logging.Logger;
 
 /**
  * Classe MotDePasseOublie
@@ -19,10 +19,11 @@ public class MotDePasseOublie {
     private String email;
     private String message;
     private String result;
-
+    Logger logger = Logger.getLogger(getClass().getName());
     private MotDePasseOublieManager motDePasseOublieManager;
 
-    private IDao dao;
+    static final String ERROR = "ERROR";
+    IDao dao;
 
     /**
      * Constructeur de la classe MotDePasseOublie
@@ -30,7 +31,7 @@ public class MotDePasseOublie {
      * Utilisé par Spring par Injection de Dépendence
      */
     public MotDePasseOublie() {
-        System.out.println("In Constructor from MotDePasseOublie class ");
+        logger.info("In Constructor from MotDePasseOublie class ");
         ApplicationContext context = WebApplicationContextUtils
                 .getRequiredWebApplicationContext(ServletActionContext.getServletContext());
         this.motDePasseOublieManager = (MotDePasseOublieManager) context.getBean("mdpOublieManager");
@@ -41,7 +42,7 @@ public class MotDePasseOublie {
      * @return String : "SUCCESS" si l'email a été envoyé, "ERROR" sinon
      */
     public String execute() {
-        this.result = "ERROR";
+        this.result = ERROR;
         if (this.userCde == null || this.email == null) {
             return this.result;
         }
@@ -55,13 +56,13 @@ public class MotDePasseOublie {
                 return this.result;
             } else {
                 this.message = "Erreur lors de l'envoi de l'email.";
-                this.result = "ERROR";
+                this.result = ERROR;
                 return this.result;
             }
         } catch (Exception e) {
-            System.out.println("Erreur lors de l'envoi de l'email : " + e);
+            logger.info("Erreur lors de l'envoi de l'email : " + e);
             this.message = "Erreur lors de l'envoi de l'email.";
-            this.result = "ERROR";
+            this.result = ERROR;
             return this.result;
         }
     }
@@ -98,4 +99,8 @@ public class MotDePasseOublie {
         this.result = result;
     }
 
+    public void setMotDePasseOublieManager(MotDePasseOublieManager motDePasseOublieManager)
+    {
+        this.motDePasseOublieManager = motDePasseOublieManager;
+    }
 }

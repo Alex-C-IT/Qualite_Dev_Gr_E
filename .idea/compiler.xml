@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="_00_ASBank2023" />
-        <module name="_00_ASBank2018" />
       </profile>
     </annotationProcessing>
   </component>

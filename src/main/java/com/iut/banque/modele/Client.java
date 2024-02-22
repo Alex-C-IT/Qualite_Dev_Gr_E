@@ -100,7 +100,7 @@ public class Client extends Utilisateur {
 		super(nom, prenom, adresse, homme, email, null, usrPwd);
 		setUserId(usrId);
 		setNumeroClient(numeroClient);
-		this.accounts = new HashMap<String, Compte>();
+		this.accounts = new HashMap<>();
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class Client extends Utilisateur {
 	 *         correct, false sinon
 	 */
 	public static boolean checkFormatNumeroClient(String s) {
-		return Pattern.matches("[0-9]{10}", s);
+		return Pattern.matches("\\d{10}", s);
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class Client extends Utilisateur {
 	public boolean possedeComptesADecouvert() {
 		boolean result = false;
 		for (Compte value : accounts.values()) {
-			if (!result && value.getSolde() < 0) {
+			if (value.getSolde() < 0) {
 				result = true;
 				break;
 			}
@@ -230,4 +230,7 @@ public class Client extends Utilisateur {
 		return res;
 	}
 
+    public void setIdentity(String clientId) {
+
+    }
 }
