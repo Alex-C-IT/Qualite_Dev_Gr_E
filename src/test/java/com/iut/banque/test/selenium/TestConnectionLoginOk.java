@@ -39,7 +39,7 @@ public class TestConnectionLoginOk {
     driver.findElement(By.id("controller_Connect_login_action_userPwd")).click();
     driver.findElement(By.id("controller_Connect_login_action_userPwd")).sendKeys("admin");
     driver.findElement(By.id("controller_Connect_login_action_submit")).click();
-
+    
     assertTrue(driver.getTitle().contains("Tableau de bord - Gestionnaire"));
   }
 }
