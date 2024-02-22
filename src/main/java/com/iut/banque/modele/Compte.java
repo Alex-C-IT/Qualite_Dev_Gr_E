@@ -148,7 +148,11 @@ public abstract class Compte {
 	 * @throws InsufficientFundsException
 	 *             : dans le cas où le montant est trop élevé
 	 */
-	public abstract void debiter(double montant) throws InsufficientFundsException, IllegalFormatException;
+	public abstract void debiter(double montant) throws InsufficientFundsException, IllegalFormatException;{
+
+		// si le "découvert autorisé" <  "solde" - montant alors
+		// 	throw new IllegalFormatException("Le seuil de découvert ne peut pas etre dépassé");
+	}
 
 	/**
 	 * Crédite sur le compte le montant passé en paramètre.

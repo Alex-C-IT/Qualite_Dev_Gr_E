@@ -77,7 +77,7 @@ public class BanqueManager {
 	}
 
 	/**
-	 * Méthode pour créditer un compte en faisant appel à la méthode créditer de
+	 * Méthode pour débiter un compte en faisant appel à la méthode débiter de
 	 * l'objet bank pour mettre à jour localement, et ensuite appeler la méthode
 	 * updateAccount de la DAO pour mettre à jour les données dans la base de
 	 * données
